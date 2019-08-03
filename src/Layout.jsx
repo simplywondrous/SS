@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { makeStyles } from "@material-ui/styles"
 
 import Sidebar from "./Sidebar"
+import Main from "./Main"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -19,8 +20,7 @@ const useStyles = makeStyles(theme => ({
   sidebar: {
     gridArea: "sidebar",
     backgroundColor: "red",
-    // width: "250px",
-    transition: "all 1s"
+    transition: "all 0.5s"
   },
   expanded: {
     width: "250px"
@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Layout = () => {
+const Layout = ({ data }) => {
   const [expanded, setExpanded] = useState(false)
   const classes = useStyles()
   return (
@@ -58,7 +58,9 @@ const Layout = () => {
         />
       </div>
       <div className={classes.header}>Header</div>
-      <div className={classes.main} />
+      <div className={classes.main}>
+        <Main data={data} />
+      </div>
       <div className={classes.footer}>Footer</div>
     </div>
   )
