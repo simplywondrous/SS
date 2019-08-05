@@ -21,12 +21,13 @@ const useStyles = makeStyles(theme => ({
     gridArea: "sidebar",
     backgroundColor: "red",
     transition: "all 0.5s"
+    // display: "flex"
   },
   expanded: {
-    width: "250px"
+    width: "200px"
   },
   closed: {
-    width: "50px"
+    width: "75px"
   },
   header: {
     gridArea: "header",
@@ -34,7 +35,7 @@ const useStyles = makeStyles(theme => ({
   },
   main: {
     gridArea: "main",
-    backgroundColor: "yellow"
+    backgroundColor: "#fff"
   },
   footer: {
     gridArea: "footer",

@@ -1,41 +1,71 @@
 import React from "react"
 import { makeStyles } from "@material-ui/styles"
+import { Typography } from "@material-ui/core"
 
 import IconButton from "@material-ui/core/IconButton"
 import CloseIcon from "@material-ui/icons/ChevronLeft"
-import OpenIcon from "@material-ui/icons/ChevronRight"
+
+// TODO: I have been trying for hours to figure out how to not get the logo to be either flush left or right right before expanding... will need deep dive into CSS transitions sometime
 
 const useStyles = makeStyles(theme => ({
   root: {
     width: "100%",
     height: "100%",
-    display: "flex"
+    display: "flex",
+    flexDirection: "column"
+  },
+  logoBlock: {
+    display: "flex",
+    justifyContent: "space-between"
   },
   toggleIcon: {
-    position: "fixed",
-    marginLeft: props => props.marginLeft,
     justifySelf: "flex-end",
     width: "50px",
     height: "50px"
   },
-  logo: {
-    height: "100px",
+  icon: {
+    height: "50px",
     justifySelf: "center",
     marginRight: "auto",
     marginLeft: "auto",
     marginTop: "20px"
+  },
+  column: {
+    display: "flex",
+    flexDirection: "column"
   }
 }))
 
 const Sidebar = ({ expanded, toggleExpand }) => {
-  const styleProps = { marginLeft: expanded ? "200px" : "0px" }
-  const classes = useStyles(styleProps)
+  const classes = useStyles()
   return (
     <div className={classes.root}>
-      {expanded ? <img src={logoSrc} className={classes.logo} /> : undefined}
-      <IconButton className={classes.toggleIcon} onClick={toggleExpand}>
-        {expanded ? <CloseIcon /> : <OpenIcon />}
-      </IconButton>
+      {expanded ? (
+        <div>
+          <div className={classes.logoBlock}>
+            <div />
+            <img
+              src={logoSrc}
+              className={classes.icon}
+              style={{ paddingLeft: "50px" }}
+            />
+            <IconButton className={classes.toggleIcon} onClick={toggleExpand}>
+              <CloseIcon />
+            </IconButton>
+          </div>
+          <div className={classes.column}>
+            <Typography className={classes.icon}>Really Long</Typography>
+            <Typography className={classes.icon}>Two</Typography>
+          </div>
+        </div>
+      ) : (
+        <div className={classes.column}>
+          <img src={logoSrc} className={classes.icon} />
+          <img src={logoSrc} className={classes.icon} onClick={toggleExpand} />
+          <img src={logoSrc} className={classes.icon} />
+          <img src={logoSrc} className={classes.icon} />
+        </div>
+      )}
     </div>
   )
 }

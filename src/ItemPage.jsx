@@ -1,14 +1,25 @@
-import React from "react"
+import React, { useState } from "react"
 import { makeStyles } from "@material-ui/styles"
+import pic from "./pic.png"
+
+import {
+  Paper,
+  Typography,
+  Card,
+  CardActionArea,
+  CardMedia,
+  CardContent
+} from "@material-ui/core"
 
 import IconButton from "@material-ui/core/IconButton"
-import OpenIcon from "@material-ui/icons/ExpandMore"
-import CloseIcon from "@material-ui/icons/ExpandLess"
+import OpenIcon from "@material-ui/icons/ChevronRight"
+import CloseIcon from "@material-ui/icons/ExpandMore"
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    marginRight: "10px"
   },
   header: {
     height: "75px",
@@ -23,27 +34,11 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column"
   }
-  // drawer: {
-  //   display: "flex",
-  //   flexDirection: "column",
-  //   padding: "50px"
-  // },
-  // drawerHeading: {
-  //   // Name and Edit Btn
-  //   display: "flex",
-  //   alignItems: "center"
-  // },
-  // drawerEditBtn: {
-  //   marginLeft: "auto"
-  // },
-  // drawerContent: {
-  //   // Text styles and padding
-  // }
 }))
 
 const ItemPage = ({ data }) => {
   const classes = useStyles()
-  console.log(data.drawers)
+  // console.log(data.drawers)
   return (
     <div className={classes.root}>
       <div className={classes.header}>
@@ -65,34 +60,73 @@ const drawerStyles = makeStyles(theme => ({
   root: {
     display: "flex",
     flexDirection: "column",
-    padding: "50px",
-    paddingLeft: "25px"
+    margin: "25px 10px 0px 10px",
+    padding: "25px"
+    // backgroundColor: "#f5f5f5"
   },
   heading: {
     // Name and Edit Btn
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    marginLeft: "-10px"
   },
   editBtn: {
     marginLeft: "auto"
   },
   content: {
     // Text styles and padding
+    backgroundColor: "#f5f5f5"
+    // padding: "10px"
   }
 }))
 
 const Drawer = ({ drawer }) => {
+  const [expanded, setExpanded] = useState(true)
   const classes = drawerStyles()
   return (
     <div className={classes.root}>
       <div className={classes.heading}>
-        <IconButton>
-          <OpenIcon />
+        <IconButton onClick={() => setExpanded(!expanded)}>
+          {expanded ? <CloseIcon /> : <OpenIcon />}
         </IconButton>
-        {drawer.name}
+        <Typography>{drawer.name}</Typography>
         <button className={classes.editBtn}>Edit Contents</button>
       </div>
+      {expanded ? (
+        <Paper className={classes.content}>
+          {drawer.items.map(item => {
+            return <Item item={item} />
+          })}
+        </Paper>
+      ) : null}
     </div>
+  )
+}
+
+const itemStyles = makeStyles({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    width: "150px",
+    margin: "10px"
+  },
+  image: {
+    height: "150px"
+  },
+  content: {
+    height: "20px"
+  }
+})
+
+const Item = ({ item }) => {
+  const classes = itemStyles()
+  return (
+    <Card className={classes.root}>
+      <CardActionArea>
+        <CardMedia className={classes.image} image={pic} />
+      </CardActionArea>
+      {item.name}
+    </Card>
   )
 }
 
