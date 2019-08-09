@@ -7,13 +7,14 @@ import {
   Typography,
   Card,
   CardActionArea,
-  CardMedia,
-  CardContent
+  CardMedia
 } from "@material-ui/core"
 
 import IconButton from "@material-ui/core/IconButton"
 import OpenIcon from "@material-ui/icons/ChevronRight"
 import CloseIcon from "@material-ui/icons/ExpandMore"
+
+import ItemPortal from "./ItemPortal"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -60,9 +61,8 @@ const drawerStyles = makeStyles(theme => ({
   root: {
     display: "flex",
     flexDirection: "column",
-    margin: "25px 10px 0px 10px",
-    padding: "25px"
-    // backgroundColor: "#f5f5f5"
+    margin: "10px 10px 0px 10px",
+    padding: "5px 15px"
   },
   heading: {
     // Name and Edit Btn
@@ -74,14 +74,18 @@ const drawerStyles = makeStyles(theme => ({
     marginLeft: "auto"
   },
   content: {
-    // Text styles and padding
-    backgroundColor: "#f5f5f5"
-    // padding: "10px"
+    display: "flex",
+    flexWrap: "wrap"
+  },
+  portal: {
+    height: "auto"
   }
 }))
 
 const Drawer = ({ drawer }) => {
   const [expanded, setExpanded] = useState(true)
+  const [itemPortalId, setItemPortalId] = useState(null)
+
   const classes = drawerStyles()
   return (
     <div className={classes.root}>
@@ -93,11 +97,21 @@ const Drawer = ({ drawer }) => {
         <button className={classes.editBtn}>Edit Contents</button>
       </div>
       {expanded ? (
-        <Paper className={classes.content}>
-          {drawer.items.map(item => {
-            return <Item item={item} />
-          })}
-        </Paper>
+        <div>
+          <div className={classes.content}>
+            {drawer.items.map(item => {
+              return <Item item={item} handleClick={setItemPortalId} />
+            })}
+          </div>
+          <div className={classes.portal}>
+            {itemPortalId ? (
+              <ItemPortal
+                item={drawer.items.find(item => item.id === itemPortalId)}
+                shown={itemPortalId !== null}
+              />
+            ) : null}
+          </div>
+        </div>
       ) : null}
     </div>
   )
@@ -108,24 +122,47 @@ const itemStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     width: "150px",
-    margin: "10px"
+    margin: "15px"
   },
   image: {
-    height: "150px"
+    height: "150px",
+    transition: "all 0.3s ease-in-out 0s"
+  },
+  overlay: {
+    transition: "all 0.3s ease-in-out 0s",
+    background: "rgba(0,0,0,0.7)",
+    opacity: "0",
+    position: "absolute",
+    top: "0",
+    left: "0",
+    height: "100%",
+    width: "100%",
+    "&:hover": {
+      //Stops working if "&:hover $content"... why?
+      opacity: "1"
+    }
   },
   content: {
-    height: "20px"
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+    color: "#fff"
   }
 })
 
-const Item = ({ item }) => {
+const Item = ({ item, handleClick }) => {
   const classes = itemStyles()
   return (
     <Card className={classes.root}>
-      <CardActionArea>
+      <CardActionArea onClick={() => handleClick(item.id)}>
         <CardMedia className={classes.image} image={pic} />
+        <div className={classes.overlay}>
+          <div className={classes.content}>{item.name}</div>
+        </div>
       </CardActionArea>
-      {item.name}
     </Card>
   )
 }
