@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useReducer } from "react"
 import { makeStyles } from "@material-ui/styles"
 import {
   Card,
@@ -39,7 +39,42 @@ const useStyles = makeStyles({
   }
 })
 
+/**
+ *  id: "an-id-2",
+      user: "User",
+      name: "Name 2",
+      image: null,
+      brand: "Brand",
+      year: "Year",
+      expiration: Date.now(),
+      openedOn: Date.now(),
+      finishedOn: Date.now(),
+      drawer: "Drawer",
+      notes: "Notes"
+    },
+ */
+
 const ItemPortal = ({ item, shown }) => {
+  const initialState = {
+    name: item.name ? item.name : "",
+    image: item.image ? item.image : "",
+    brand: item.brand ? item.brand : "",
+    year: item.year ? item.year : "",
+    expiration: "",
+    openedOn: "",
+    finishedOn: "",
+    drawer: "",
+    notes: ""
+  }
+
+  function reducer(state, input) {
+    let newState = { ...state }
+    newState[input.id] = input.value
+
+    return newState
+  }
+
+  const [state, dispatch] = useReducer(reducer, initialState)
   const classes = useStyles()
   return (
     <Card className={classes.root}>
@@ -49,11 +84,17 @@ const ItemPortal = ({ item, shown }) => {
           <img className={classes.image} src={pic} />
         </div>
         <div className={classes.fieldBlock}>
-          {item.name}
+          {state.name}
           <FormControl>
-            <InputLabel htmlFor="my-input">Email address</InputLabel>
-            <Input id="my-input" />
-            <FormHelperText id="my-helper-text">
+            <InputLabel htmlFor="name">Name</InputLabel>
+            <Input
+              id="name"
+              value={state.name}
+              onChange={e =>
+                dispatch({ id: e.target.id, value: e.target.value })
+              }
+            />
+            <FormHelperText id="name">
               We'll never share your email.
             </FormHelperText>
           </FormControl>
