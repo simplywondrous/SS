@@ -1,6 +1,12 @@
 import React, { useReducer, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Card, FormControl, InputLabel, Input } from '@material-ui/core';
+import {
+  Card,
+  FormControl,
+  InputLabel,
+  Input,
+  Typography
+} from '@material-ui/core';
 
 import pic from './pic.png';
 
@@ -24,7 +30,8 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     margin: '10px',
-    height: 'auto'
+    height: 'auto',
+    padding: '15px'
   },
   image: {
     height: '200px',
@@ -38,7 +45,7 @@ const ItemPortal = ({ item }) => {
     name: item.name ? item.name : '',
     image: item.image ? item.image : '',
     brand: item.brand ? item.brand : '',
-    year: item.year ? item.year : '',
+    year: item.year ? item.year : null,
     expiration: '',
     openedOn: '',
     finishedOn: '',
@@ -63,6 +70,12 @@ const ItemPortal = ({ item }) => {
           <img className={classes.image} src={pic} />
         </div>
         <div className={classes.fieldBlock}>
+          <Typography variant="h4">{item.name}</Typography>
+          <Typography variant="subtitle1">
+            {item.brand}
+            {item.year ? ` - ${item.year}` : null}
+          </Typography>
+
           {/* <EditableField
             id="name"
             editable={edit}
@@ -89,6 +102,17 @@ const ItemPortal = ({ item }) => {
           /> */}
         </div>
         <div className={classes.fieldBlock}>
+          {item.expiration ? (
+            <Typography variant="h5">Expires On: {item.expiration}</Typography>
+          ) : null}
+          {item.openedOn ? (
+            <Typography variant="h6">Opened On: {item.openedOn}</Typography>
+          ) : null}
+          {item.finishedOn ? (
+            <Typography variant="body1">
+              Finished On: {item.finishedOn}
+            </Typography>
+          ) : null}
           {/* <EditableField
             id="expiration"
             editable={edit}
@@ -145,6 +169,8 @@ const ItemPortal = ({ item }) => {
 export default ItemPortal;
 
 /**
+ * Okay for now, we'll do things the inefficient way with just edit or no edit
+ *
  * Normal mode: No underline, no labels (as it's filled in), disabled input
  * Edit mode: Pre-filled in, but now labels, not disabled
  *
