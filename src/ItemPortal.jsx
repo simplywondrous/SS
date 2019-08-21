@@ -1,14 +1,21 @@
 import React, { useReducer, useState } from "react";
 import { makeStyles } from "@material-ui/styles";
-import { Card, TextField, Typography } from "@material-ui/core";
+import {
+  Card,
+  TextField,
+  Typography,
+  MenuItem,
+  Button
+} from "@material-ui/core";
 
 import IconButton from "@material-ui/core/IconButton";
-import CheckIcon from "@material-ui/icons/CheckCircleOutline";
+import EditIcon from "@material-ui/icons/Edit";
 
 import pic from "./pic.png";
 
 const useStyles = makeStyles({
   root: {
+    position: "relative",
     transition: "all 0.3s ease-in-out 0s",
     margin: "15px",
 
@@ -17,16 +24,24 @@ const useStyles = makeStyles({
     width: "100%",
     height: "100%"
   },
+  editIcon: {
+    position: "absolute",
+    right: "0px",
+    width: "50px",
+    height: "50px",
+    marginRight: "10px"
+  },
   blockContainer: {
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
-    padding: "10px"
+    padding: "10px",
+    paddingRight: "15px"
   },
   columnBlock: {
     display: "flex",
     flexDirection: "column",
-    margin: "10px",
+    margin: "10px 15px",
     height: "auto",
     padding: "15px 5px",
     justifyContent: "space-between"
@@ -37,7 +52,7 @@ const useStyles = makeStyles({
     margin: "10px 5px",
     height: "auto",
     padding: "15px 5px",
-    justifyContent: "flex-start"
+    justifyContent: "space-between"
   },
   image: {
     height: "200px",
@@ -50,6 +65,19 @@ const useStyles = makeStyles({
   picker: {
     margin: "10px 0px 5px 0px",
     shrink: true
+  },
+  buttonBlock: {
+    position: "absolute",
+    bottom: "0px",
+    right: "0px",
+    display: "flex",
+    margin: "10px",
+    height: "auto",
+    justifyContent: "center",
+    paddingRight: "5px"
+  },
+  button: {
+    margin: "5px"
   }
 });
 
@@ -107,6 +135,12 @@ const ItemPortal = ({ item }) => {
                 ) : null}
               </div>
             </div>
+            <IconButton
+              className={classes.editIcon}
+              onClick={() => setEdit(!edit)}
+            >
+              <EditIcon />
+            </IconButton>
           </>
         ) : (
           <>
@@ -124,6 +158,25 @@ const ItemPortal = ({ item }) => {
                 label="Name"
                 id="my-input"
               />
+              <TextField
+                id="standard-select-currency"
+                select
+                label="Drawer"
+                className={classes.editing}
+                value={item.drawer}
+              >
+                <MenuItem value="value"> Option One</MenuItem>
+              </TextField>
+            </div>
+            <div className={classes.formColumnBlock}>
+              <TextField
+                className={classes.editing}
+                // variant="outlined"
+                label="Notes"
+                multiline
+                rows="8"
+                id="my-input"
+              />
             </div>
             <div className={classes.formColumnBlock}>
               <TextField
@@ -132,7 +185,6 @@ const ItemPortal = ({ item }) => {
                 type="date"
                 className={classes.picker}
                 InputLabelProps={{ shrink: true }}
-                style={{ marginTop: "5px" }}
               />
               <TextField
                 id="date"
@@ -149,12 +201,12 @@ const ItemPortal = ({ item }) => {
                 InputLabelProps={{ shrink: true }}
               />
             </div>
+            <div className={classes.buttonBlock}>
+              <Button className={classes.button}>Save</Button>
+              <Button className={classes.button}>Cancel</Button>
+            </div>
           </>
         )}
-
-        <div className={classes.columnBlock}>
-          <button onClick={() => setEdit(!edit)}>Edit Toggle</button>
-        </div>
       </div>
     </Card>
   );
