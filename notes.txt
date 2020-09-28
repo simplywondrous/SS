@@ -1,0 +1,16 @@
+Drag and Drop
+
+Okay so
+
+We have ItemPage, which renders Drawers and we go down that hole
+
+Drawer renders a draggable icon
+  When click-and-hold, drawer becomes draggable
+  All of drawer is switched with other Drawers
+  Can identify drawer by ID
+
+
+TODO:
+
+- Set drag image as the whole drawer
+  - Hide current drawer image / collapse space

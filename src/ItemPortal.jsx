@@ -5,7 +5,7 @@ import {
   TextField,
   Typography,
   MenuItem,
-  Button
+  Button,
 } from "@material-ui/core";
 
 import IconButton from "@material-ui/core/IconButton";
@@ -22,21 +22,21 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     width: "100%",
-    height: "100%"
+    height: "100%",
   },
   editIcon: {
     position: "absolute",
     right: "0px",
     width: "50px",
     height: "50px",
-    marginRight: "10px"
+    marginRight: "10px",
   },
   blockContainer: {
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
     padding: "10px",
-    paddingRight: "15px"
+    paddingRight: "15px",
   },
   columnBlock: {
     display: "flex",
@@ -44,7 +44,7 @@ const useStyles = makeStyles({
     margin: "10px 15px",
     height: "auto",
     padding: "15px 5px",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   formColumnBlock: {
     display: "flex",
@@ -52,19 +52,19 @@ const useStyles = makeStyles({
     margin: "10px 5px",
     height: "auto",
     padding: "15px 5px",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   image: {
     height: "200px",
     width: "200px",
-    objectFit: "cover"
+    objectFit: "cover",
   },
   editing: {
-    margin: "5px 0px"
+    margin: "5px 0px",
   },
   picker: {
     margin: "10px 0px 5px 0px",
-    shrink: true
+    shrink: true,
   },
   buttonBlock: {
     position: "absolute",
@@ -74,14 +74,14 @@ const useStyles = makeStyles({
     margin: "10px",
     height: "auto",
     justifyContent: "center",
-    paddingRight: "5px"
+    paddingRight: "5px",
   },
   button: {
-    margin: "5px"
-  }
+    margin: "5px",
+  },
 });
 
-const ItemPortal = ({ item }) => {
+export const ItemPortal = ({ item }) => {
   const initialState = {
     name: item.name ? item.name : "",
     image: item.image ? item.image : "",
@@ -90,7 +90,7 @@ const ItemPortal = ({ item }) => {
     openedOn: item.openedOn ? item.openedOn.toLocaleDateString() : "",
     finishedOn: item.finishedOn ? item.finishedOn.toLocaleDateString() : "-",
     drawer: item.drawer ? item.drawer : "",
-    notes: item.notes ? item.notes : ""
+    notes: item.notes ? item.notes : "",
   };
 
   function reducer(state, input) {
@@ -211,8 +211,6 @@ const ItemPortal = ({ item }) => {
     </Card>
   );
 };
-
-export default ItemPortal;
 
 /**
  * Future:

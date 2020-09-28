@@ -1,10 +1,10 @@
-import React, { useState } from "react"
-import { makeStyles } from "@material-ui/styles"
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/styles";
 
-import Sidebar from "./Sidebar"
-import Main from "./Main"
+import Sidebar from "./Sidebar";
+import { Body } from "./Body";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: "100vw",
     height: "100vh",
@@ -15,37 +15,37 @@ const useStyles = makeStyles(theme => ({
         "sidebar header"
         "sidebar main"
         "sidebar footer"`,
-    gridGap: "10px 10px"
+    gridGap: "10px 10px",
   },
   sidebar: {
     gridArea: "sidebar",
     backgroundColor: "red",
-    transition: "all 0.5s"
+    transition: "all 0.5s",
     // display: "flex"
   },
   expanded: {
-    width: "200px"
+    width: "200px",
   },
   closed: {
-    width: "75px"
+    width: "75px",
   },
   header: {
     gridArea: "header",
-    backgroundColor: "green"
+    backgroundColor: "green",
   },
   main: {
     gridArea: "main",
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
   },
   footer: {
     gridArea: "footer",
-    backgroundColor: "blue"
-  }
-}))
+    backgroundColor: "blue",
+  },
+}));
 
 const Layout = ({ data }) => {
-  const [expanded, setExpanded] = useState(false)
-  const classes = useStyles()
+  const [expanded, setExpanded] = useState(false);
+  const classes = useStyles();
   return (
     <div className={classes.root}>
       <div
@@ -60,11 +60,11 @@ const Layout = ({ data }) => {
       </div>
       <div className={classes.header}>Header</div>
       <div className={classes.main}>
-        <Main data={data} />
+        <Body data={data} />
       </div>
       <div className={classes.footer}>Footer</div>
     </div>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;
