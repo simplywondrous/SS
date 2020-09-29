@@ -108,7 +108,7 @@ export const ItemPortal = ({ item }) => {
     <Card className={classes.root}>
       <div className={classes.blockContainer}>
         <div className={classes.columnBlock}>
-          <img className={classes.image} src={pic} />
+          <img className={classes.image} src={pic} alt="placeholder" />
         </div>
         {!edit ? (
           <>

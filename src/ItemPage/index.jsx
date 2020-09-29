@@ -3,8 +3,9 @@ import React from "react";
 import { makeStyles } from "@material-ui/styles";
 
 import { Drawer } from "./Drawer";
+import { Demo } from "./DomToImage";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
     flexDirection: "column",
@@ -25,9 +26,36 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ItemPage = ({ data }) => {
+export const ItemPage = ({ data, cursor }) => {
   const classes = useStyles();
   // console.log(data.drawers)
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "onDragOver";
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const target = e.dataTransfer.getData("text/plain");
+    // Instead of below, would then do placing drawer logic
+    console.log("Dropped!", target);
+    // Update drawer position in db
+    // data.drawers.findIndex(); // Wouldn't need this step if include position in HTML element
+  };
+
+  const DrawerDropZone = () => (
+    <div
+      style={{
+        padding: "15px",
+        backgroundColor: "red",
+        height: "100px",
+        width: "100px",
+      }}
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
+    />
+  );
 
   return (
     <div className={classes.root}>
@@ -38,37 +66,19 @@ export const ItemPage = ({ data }) => {
       </div>
       <div className={classes.display}>
         {/* Populate with drawers, with unsorted last */}
-        {data.drawers.map((drawer) => {
-          return (
-            <DrawerDropZone>
-              <Drawer drawer={drawer} />
-            </DrawerDropZone>
-          );
-        })}
+        <DrawerDropZone />
+        <Demo />
+        {data.drawers
+          .sort((a, b) => a.position - b.position)
+          .map((drawer) => {
+            return (
+              <>
+                <Drawer drawer={drawer} cursor={cursor} />
+                <DrawerDropZone />
+              </>
+            );
+          })}
       </div>
     </div>
   );
 };
-
-const handleDragOver = (e) => {
-  e.preventDefault();
-  e.dataTransfer.dropEffect = "onDragOver";
-};
-
-const handleDrop = (e) => {
-  e.preventDefault();
-  const data = e.dataTransfer.getData("text/plain");
-  // Instead of below, would then render that drawer
-  console.log("Dropped!");
-  e.target.appendChild(document.getElementById(data));
-};
-
-const DrawerDropZone = ({ children }) => (
-  <div
-    styles={{ padding: "15px", backgroundColor: "red" }}
-    ondrop={handleDrop}
-    ondragover={handleDragOver}
-  >
-    {children}
-  </div>
-);

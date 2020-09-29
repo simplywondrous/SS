@@ -45,6 +45,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Layout = ({ data }) => {
   const [expanded, setExpanded] = useState(false);
+  const [cursor, setCursor] = useState("pointer");
+
+  const setCursorGrab = () => setCursor("grab");
+  const setCursorGrabbing = () => setCursor("grabbing");
+  const setCursorRelease = () => setCursor("pointer");
+
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -60,7 +66,15 @@ const Layout = ({ data }) => {
       </div>
       <div className={classes.header}>Header</div>
       <div className={classes.main}>
-        <Body data={data} />
+        <Body
+          data={data}
+          cursor={{
+            current: cursor,
+            setCursorGrab,
+            setCursorGrabbing,
+            setCursorRelease,
+          }}
+        />
       </div>
       <div className={classes.footer}>Footer</div>
     </div>

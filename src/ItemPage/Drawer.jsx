@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { makeStyles } from "@material-ui/styles";
 import IconButton from "@material-ui/core/IconButton";
@@ -35,14 +35,15 @@ const drawerStyles = makeStyles(() => ({
   },
 }));
 
-export const Drawer = ({ drawer }) => {
-  const [expanded, setExpanded] = useState(true);
-  const [cursor, setCursor] = useState("auto");
+export const Drawer = ({ drawer, cursor }) => {
+  const [expanded, setExpanded] = useState(false);
   const [itemPortalId, setItemPortalId] = useState(null);
+  // TODO probably moving this later as it relates to items too?
 
   const handleDragStart = (e) => {
-    console.log("Drag Start!");
-    e.dataTransfer.setData("text/plain", e.target.id);
+    console.log("Drag Start!", e);
+    e.dataTransfer.setData("text/plain", e.target);
+    e.dataTransfer.dropEffect = "move";
   };
 
   const handleItemClick = (id) => {
@@ -51,7 +52,11 @@ export const Drawer = ({ drawer }) => {
 
   const classes = drawerStyles();
   return (
-    <div className={classes.root}>
+    <div
+      className={classes.root}
+      draggable
+      onDragStart={(e) => e.preventDefault()}
+    >
       <div className={classes.heading}>
         <IconButton onClick={() => setExpanded(!expanded)}>
           {expanded ? <CloseIcon /> : <OpenIcon />}
@@ -60,11 +65,12 @@ export const Drawer = ({ drawer }) => {
         <button className={classes.editBtn}>Edit Contents</button>
         <IconButton
           disableRipple
+          onMouseDown={cursor.setCursorGrab}
+          // onMouseLeave={cursor.setCursorGrabbing}
           draggable
-          onClick={() => setCursor("grab")}
           onDragStart={handleDragStart}
           id={drawer.id}
-          style={{ cursor }}
+          style={{ cursor: cursor.current }}
         >
           <DragHandleIcon />
         </IconButton>
@@ -73,7 +79,9 @@ export const Drawer = ({ drawer }) => {
         <div>
           <div className={classes.content}>
             {drawer.items.map((item) => {
-              return <Item item={item} handleClick={handleItemClick} />;
+              return (
+                <Item item={item} handleClick={handleItemClick} key={item.id} />
+              );
             })}
           </div>
           <div className={classes.portal}>

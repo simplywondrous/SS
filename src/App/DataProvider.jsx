@@ -1,6 +1,6 @@
-import React from "react"
+import React from "react";
 
-const date = new Date()
+const date = new Date();
 
 const data = {
   items: [
@@ -16,7 +16,7 @@ const data = {
       openedOn: date,
       finishedOn: date,
       drawer: "Drawer",
-      notes: "Notes"
+      notes: "Notes",
     },
     {
       id: "an-id-2",
@@ -29,7 +29,7 @@ const data = {
       openedOn: date,
       finishedOn: date,
       drawer: "Drawer",
-      notes: "Notes"
+      notes: "Notes",
     },
     {
       id: "an-id-3",
@@ -42,7 +42,7 @@ const data = {
       openedOn: date,
       finishedOn: date,
       drawer: "Drawer 2",
-      notes: "Notes"
+      notes: "Notes",
     },
     {
       id: "an-id-4",
@@ -55,7 +55,7 @@ const data = {
       openedOn: date,
       finishedOn: date,
       drawer: "Drawer",
-      notes: "Notes"
+      notes: "Notes",
     },
     {
       id: "an-id-5",
@@ -68,7 +68,7 @@ const data = {
       openedOn: date,
       finishedOn: date,
       drawer: "Drawer",
-      notes: "Notes"
+      notes: "Notes",
     },
     {
       id: "an-id-6",
@@ -81,12 +81,13 @@ const data = {
       openedOn: date,
       finishedOn: date,
       drawer: "Drawer",
-      notes: "Notes"
-    }
+      notes: "Notes",
+    },
   ],
   drawers: [
     {
       id: "drawer-one",
+      position: 1,
       name: "Drawer 1",
       items: [
         {
@@ -100,7 +101,7 @@ const data = {
           openedOn: date,
           finishedOn: date,
           drawer: "Drawer",
-          notes: "Notes"
+          notes: "Notes",
         },
         {
           id: "an-id-2",
@@ -113,7 +114,7 @@ const data = {
           openedOn: date,
           finishedOn: date,
           drawer: "Drawer",
-          notes: "Notes"
+          notes: "Notes",
         },
         {
           id: "an-id-4",
@@ -126,7 +127,7 @@ const data = {
           openedOn: date,
           finishedOn: date,
           drawer: "Drawer",
-          notes: "Notes"
+          notes: "Notes",
         },
         {
           id: "an-id-5",
@@ -139,7 +140,7 @@ const data = {
           openedOn: date,
           finishedOn: date,
           drawer: "Drawer",
-          notes: "Notes"
+          notes: "Notes",
         },
         {
           id: "an-id-6",
@@ -152,12 +153,13 @@ const data = {
           openedOn: date,
           finishedOn: date,
           drawer: "Drawer",
-          notes: "Notes"
-        }
-      ]
+          notes: "Notes",
+        },
+      ],
     },
     {
       id: "drawer-two",
+      position: 2,
       name: "Drawer 2",
       items: [
         {
@@ -171,18 +173,18 @@ const data = {
           openedOn: date,
           finishedOn: null,
           drawer: "Drawer 2",
-          notes: "Notes"
-        }
-      ]
-    }
-  ]
-}
+          notes: "Notes",
+        },
+      ],
+    },
+  ],
+};
 
 const DataProvider = ({ children }) => {
-  return <div>{children(data)}</div>
-}
+  return <div>{children(data)}</div>;
+};
 
-export default DataProvider
+export default DataProvider;
 
 /**
  * GQL:
