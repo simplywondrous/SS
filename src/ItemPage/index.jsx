@@ -3,7 +3,6 @@ import React from "react";
 import { makeStyles } from "@material-ui/styles";
 
 import { Drawer } from "./Drawer";
-import { Demo } from "./DomToImage";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -32,6 +31,7 @@ export const ItemPage = ({ data, cursor }) => {
 
   const handleDragOver = (e) => {
     e.preventDefault();
+    console.log("Over")
     e.dataTransfer.dropEffect = "onDragOver";
   };
 
@@ -67,7 +67,6 @@ export const ItemPage = ({ data, cursor }) => {
       <div className={classes.display}>
         {/* Populate with drawers, with unsorted last */}
         <DrawerDropZone />
-        <Demo />
         {data.drawers
           .sort((a, b) => a.position - b.position)
           .map((drawer) => {

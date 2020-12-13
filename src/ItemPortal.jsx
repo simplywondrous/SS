@@ -1,4 +1,6 @@
-import React, { useReducer, useState } from "react";
+import React, { 
+  // useReducer, 
+  useState } from "react";
 import { makeStyles } from "@material-ui/styles";
 import {
   Card,
@@ -82,25 +84,25 @@ const useStyles = makeStyles({
 });
 
 export const ItemPortal = ({ item }) => {
-  const initialState = {
-    name: item.name ? item.name : "",
-    image: item.image ? item.image : "",
-    brand: item.brand ? item.brand : "",
-    expiration: item.expiration ? item.expiration.toLocaleDateString() : "",
-    openedOn: item.openedOn ? item.openedOn.toLocaleDateString() : "",
-    finishedOn: item.finishedOn ? item.finishedOn.toLocaleDateString() : "-",
-    drawer: item.drawer ? item.drawer : "",
-    notes: item.notes ? item.notes : "",
-  };
+  // const initialState = {
+  //   name: item.name ? item.name : "",
+  //   image: item.image ? item.image : "",
+  //   brand: item.brand ? item.brand : "",
+  //   expiration: item.expiration ? item.expiration.toLocaleDateString() : "",
+  //   openedOn: item.openedOn ? item.openedOn.toLocaleDateString() : "",
+  //   finishedOn: item.finishedOn ? item.finishedOn.toLocaleDateString() : "-",
+  //   drawer: item.drawer ? item.drawer : "",
+  //   notes: item.notes ? item.notes : "",
+  // };
 
-  function reducer(state, input) {
-    let newState = { ...state };
-    newState[input.id] = input.value;
+  // function reducer(state, input) {
+  //   let newState = { ...state };
+  //   newState[input.id] = input.value;
 
-    return newState;
-  }
+  //   return newState;
+  // }
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  // const [state, dispatch] = useReducer(reducer, initialState);
   const [edit, setEdit] = useState(true);
   const classes = useStyles();
 

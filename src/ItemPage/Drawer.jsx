@@ -38,6 +38,7 @@ const drawerStyles = makeStyles(() => ({
 export const Drawer = ({ drawer, cursor }) => {
   const [expanded, setExpanded] = useState(false);
   const [itemPortalId, setItemPortalId] = useState(null);
+  const [isDragged, setIsDragged] = useState(false)
   // TODO probably moving this later as it relates to items too?
 
   const handleDragStart = (e) => {
@@ -54,8 +55,8 @@ export const Drawer = ({ drawer, cursor }) => {
   return (
     <div
       className={classes.root}
-      draggable
-      onDragStart={(e) => e.preventDefault()}
+      draggable={isDragged}
+      onDragStart={handleDragStart}
     >
       <div className={classes.heading}>
         <IconButton onClick={() => setExpanded(!expanded)}>
@@ -65,12 +66,11 @@ export const Drawer = ({ drawer, cursor }) => {
         <button className={classes.editBtn}>Edit Contents</button>
         <IconButton
           disableRipple
-          onMouseDown={cursor.setCursorGrab}
+          onClick={() => setIsDragged(true)}
+          // onMouseDown={cursor.setCursorGrab}
           // onMouseLeave={cursor.setCursorGrabbing}
-          draggable
-          onDragStart={handleDragStart}
           id={drawer.id}
-          style={{ cursor: cursor.current }}
+          // style={{ cursor: cursor.current }}
         >
           <DragHandleIcon />
         </IconButton>
