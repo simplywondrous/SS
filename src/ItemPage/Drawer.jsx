@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import { makeStyles } from "@material-ui/styles";
 import IconButton from "@material-ui/core/IconButton";
@@ -9,6 +9,7 @@ import { Typography } from "@material-ui/core";
 
 import { ItemPortal } from "../ItemPortal";
 import { Item } from "./Item";
+import { CursorContext } from "../src";
 
 const drawerStyles = makeStyles(() => ({
   root: {
@@ -35,16 +36,18 @@ const drawerStyles = makeStyles(() => ({
   },
 }));
 
-export const Drawer = ({ drawer, cursor }) => {
+export const Drawer = ({ drawer }) => {
   const [expanded, setExpanded] = useState(false);
   const [itemPortalId, setItemPortalId] = useState(null);
   const [isDragged, setIsDragged] = useState(false)
+  const { cursor, setCursor } = useContext(CursorContext)
   // TODO probably moving this later as it relates to items too?
 
   const handleDragStart = (e) => {
     console.log("Drag Start!", e);
     e.dataTransfer.setData("text/plain", e.target);
     e.dataTransfer.dropEffect = "move";
+    setCursor("grabbing")
   };
 
   const handleItemClick = (id) => {
@@ -66,11 +69,10 @@ export const Drawer = ({ drawer, cursor }) => {
         <button className={classes.editBtn}>Edit Contents</button>
         <IconButton
           disableRipple
-          onClick={() => setIsDragged(true)}
-          // onMouseDown={cursor.setCursorGrab}
-          // onMouseLeave={cursor.setCursorGrabbing}
+          onMouseDown={() => setIsDragged(true)}
+          onMouseOver={() => setCursor("grab")}
           id={drawer.id}
-          // style={{ cursor: cursor.current }}
+          style={{ cursor }}
         >
           <DragHandleIcon />
         </IconButton>
@@ -88,9 +90,9 @@ export const Drawer = ({ drawer, cursor }) => {
             {itemPortalId && (
               <ItemPortal
                 item={drawer.items.find((item) => item.id === itemPortalId)}
-                // shown={itemPortalId !== null}
-                // Right now shown is managed by the page -
-                // in the future maybe the portal manages it for animation?
+              // shown={itemPortalId !== null}
+              // Right now shown is managed by the page -
+              // in the future maybe the portal manages it for animation?
               />
             )}
           </div>

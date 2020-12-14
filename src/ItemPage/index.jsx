@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const ItemPage = ({ data, cursor }) => {
+export const ItemPage = ({ data }) => {
   const classes = useStyles();
   // console.log(data.drawers)
 
@@ -72,7 +72,7 @@ export const ItemPage = ({ data, cursor }) => {
           .map((drawer) => {
             return (
               <>
-                <Drawer drawer={drawer} cursor={cursor} />
+                <Drawer drawer={drawer} />
                 <DrawerDropZone />
               </>
             );
