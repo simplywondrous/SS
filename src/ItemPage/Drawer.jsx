@@ -7,9 +7,9 @@ import CloseIcon from "@material-ui/icons/ExpandMore";
 import DragHandleIcon from "@material-ui/icons/DragHandle";
 import { Typography } from "@material-ui/core";
 
-import { ItemPortal } from "../ItemPortal";
+import { ItemPortal } from "./ItemPortal";
 import { Item } from "./Item";
-import { CursorContext } from "../src";
+import { CursorContext } from "../Layout";
 
 const drawerStyles = makeStyles(() => ({
   root: {
@@ -36,18 +36,17 @@ const drawerStyles = makeStyles(() => ({
   },
 }));
 
-export const Drawer = ({ drawer }) => {
+export const Drawer = ({ drawer, onDragStart }) => {
   const [expanded, setExpanded] = useState(false);
   const [itemPortalId, setItemPortalId] = useState(null);
   const [isDragged, setIsDragged] = useState(false)
   const { cursor, setCursor } = useContext(CursorContext)
-  // TODO probably moving this later as it relates to items too?
 
   const handleDragStart = (e) => {
-    console.log("Drag Start!", e);
-    e.dataTransfer.setData("text/plain", e.target);
+    console.log("Drag Start!", e.target);
+    e.dataTransfer.setData("application/x-moz-node", e.target);
     e.dataTransfer.dropEffect = "move";
-    setCursor("grabbing")
+    onDragStart(e.target)
   };
 
   const handleItemClick = (id) => {
@@ -69,7 +68,10 @@ export const Drawer = ({ drawer }) => {
         <button className={classes.editBtn}>Edit Contents</button>
         <IconButton
           disableRipple
-          onMouseDown={() => setIsDragged(true)}
+          onMouseDown={() => {
+            setIsDragged(true);
+            setCursor("grabbing")
+          }}
           onMouseOver={() => setCursor("grab")}
           id={drawer.id}
           style={{ cursor }}

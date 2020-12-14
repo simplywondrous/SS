@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { makeStyles } from "@material-ui/styles";
 
@@ -26,8 +26,15 @@ const useStyles = makeStyles(() => ({
 }));
 
 export const ItemPage = ({ data }) => {
+  const [draggedDrawer, setDraggedDrawer] = useState(null);
   const classes = useStyles();
-  // console.log(data.drawers)
+
+  const handleDragStart = (drawer) => {
+    // Hide current drawer
+    // drop zone expands to size of drawer on hover over
+    // offsetWidth and offsetHeight of node
+    setDraggedDrawer(drawer)
+  }
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -35,7 +42,7 @@ export const ItemPage = ({ data }) => {
     e.dataTransfer.dropEffect = "onDragOver";
   };
 
-  const handleDrop = (e) => {
+  const handleDragDrop = (e) => {
     e.preventDefault();
     const target = e.dataTransfer.getData("text/plain");
     // Instead of below, would then do placing drawer logic
@@ -49,13 +56,13 @@ export const ItemPage = ({ data }) => {
       style={{
         padding: "15px",
         backgroundColor: "red",
-        height: "100px",
-        width: "100px",
+        height: draggedDrawer.offsetHeight,
+        width: draggedDrawer.offsetWidth,
       }}
-      onDrop={handleDrop}
+      onDrop={handleDragDrop}
       onDragOver={handleDragOver}
     />
-  );
+  )
 
   return (
     <div className={classes.root}>
@@ -66,14 +73,14 @@ export const ItemPage = ({ data }) => {
       </div>
       <div className={classes.display}>
         {/* Populate with drawers, with unsorted last */}
-        <DrawerDropZone />
+        {draggedDrawer && <DrawerDropZone />}
         {data.drawers
           .sort((a, b) => a.position - b.position)
           .map((drawer) => {
             return (
               <>
-                <Drawer drawer={drawer} />
-                <DrawerDropZone />
+                {!draggedDrawer && <Drawer drawer={drawer} onDragStart={handleDragStart} />}
+                {draggedDrawer && <DrawerDropZone />}
               </>
             );
           })}

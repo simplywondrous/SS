@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 
 import DataProvider from "./DataProvider";
-import Layout from "../src";
+import { Layout } from "../Layout";
 
 function App() {
   return (

@@ -1,6 +1,7 @@
-import React, { 
+import React, {
   // useReducer, 
-  useState } from "react";
+  useState
+} from "react";
 import { makeStyles } from "@material-ui/styles";
 import {
   Card,
@@ -13,7 +14,7 @@ import {
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
 
-import pic from "./pic.png";
+import pic from "../pic.png";
 
 const useStyles = makeStyles({
   root: {
@@ -145,70 +146,70 @@ export const ItemPortal = ({ item }) => {
             </IconButton>
           </>
         ) : (
-          <>
-            <div className={classes.formColumnBlock}>
-              <TextField
-                // variant="outlined"
-                label="Brand"
-                id="my-input"
-                className={classes.editing}
+            <>
+              <div className={classes.formColumnBlock}>
+                <TextField
+                  // variant="outlined"
+                  label="Brand"
+                  id="my-input"
+                  className={classes.editing}
                 // style={{ marginTop: "0px" }}
-              />
-              <TextField
-                className={classes.editing}
-                // variant="outlined"
-                label="Name"
-                id="my-input"
-              />
-              <TextField
-                id="standard-select-currency"
-                select
-                label="Drawer"
-                className={classes.editing}
-                value={item.drawer}
-              >
-                <MenuItem value="value"> Option One</MenuItem>
-              </TextField>
-            </div>
-            <div className={classes.formColumnBlock}>
-              <TextField
-                className={classes.editing}
-                // variant="outlined"
-                label="Notes"
-                multiline
-                rows="8"
-                id="my-input"
-              />
-            </div>
-            <div className={classes.formColumnBlock}>
-              <TextField
-                id="date"
-                label="Expiration Date"
-                type="date"
-                className={classes.picker}
-                InputLabelProps={{ shrink: true }}
-              />
-              <TextField
-                id="date"
-                label="Opened On"
-                type="date"
-                className={classes.picker}
-                InputLabelProps={{ shrink: true }}
-              />
-              <TextField
-                id="date"
-                label="Finished On"
-                type="date"
-                className={classes.picker}
-                InputLabelProps={{ shrink: true }}
-              />
-            </div>
-            <div className={classes.buttonBlock}>
-              <Button className={classes.button}>Save</Button>
-              <Button className={classes.button}>Cancel</Button>
-            </div>
-          </>
-        )}
+                />
+                <TextField
+                  className={classes.editing}
+                  // variant="outlined"
+                  label="Name"
+                  id="my-input"
+                />
+                <TextField
+                  id="standard-select-currency"
+                  select
+                  label="Drawer"
+                  className={classes.editing}
+                  value={item.drawer}
+                >
+                  <MenuItem value="value"> Option One</MenuItem>
+                </TextField>
+              </div>
+              <div className={classes.formColumnBlock}>
+                <TextField
+                  className={classes.editing}
+                  // variant="outlined"
+                  label="Notes"
+                  multiline
+                  rows="8"
+                  id="my-input"
+                />
+              </div>
+              <div className={classes.formColumnBlock}>
+                <TextField
+                  id="date"
+                  label="Expiration Date"
+                  type="date"
+                  className={classes.picker}
+                  InputLabelProps={{ shrink: true }}
+                />
+                <TextField
+                  id="date"
+                  label="Opened On"
+                  type="date"
+                  className={classes.picker}
+                  InputLabelProps={{ shrink: true }}
+                />
+                <TextField
+                  id="date"
+                  label="Finished On"
+                  type="date"
+                  className={classes.picker}
+                  InputLabelProps={{ shrink: true }}
+                />
+              </div>
+              <div className={classes.buttonBlock}>
+                <Button className={classes.button}>Save</Button>
+                <Button className={classes.button}>Cancel</Button>
+              </div>
+            </>
+          )}
       </div>
     </Card>
   );
