@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/styles";
 
-export const styles = makeStyles({
+export const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
@@ -23,4 +23,4 @@ export const styles = makeStyles({
   portal: {
     height: "auto",
   },
-})();
+});

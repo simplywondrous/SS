@@ -2,10 +2,10 @@ import React from "react";
 
 import { makeStyles } from "@material-ui/styles";
 
-import { ItemDrawer } from "./ItemDrawer";
+import { ItemDrawer } from "./ItemDrawer/ItemDrawer";
 import { DataProvider } from "../App/DataProvider";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
@@ -24,29 +24,25 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     flexDirection: "column",
   },
-}));
+});
 
 export const ItemPage = ({ data }: { data: DataProvider }) => {
-  const classes = useStyles();
+  const { root, header, addBtn, display } = useStyles();
 
   return (
-    <div className={classes.root}>
-      <div className={classes.header}>
-        <div className={classes.addBtn}>
+    <div className={root}>
+      <div className={header}>
+        <div className={addBtn}>
           <button>Add Item</button>
         </div>
       </div>
-      <div className={classes.display}>
+      <div className={display}>
         {/* Populate with drawers, with unsorted last */}
         {data.drawers
           .sort((a, b) => a.position - b.position)
-          .map((drawer) => {
-            return (
-              <>
-                <ItemDrawer drawer={drawer} />
-              </>
-            );
-          })}
+          .map((drawer) => (
+            <ItemDrawer drawer={drawer} />
+          ))}
       </div>
     </div>
   );

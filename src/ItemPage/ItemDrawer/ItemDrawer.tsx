@@ -12,7 +12,7 @@ import { ItemPortal } from "../ItemPortal";
 import { ItemCard } from "../ItemCard";
 import { CursorContext } from "../../Layout";
 
-import { styles } from "./styles";
+import { useStyles } from "./styles";
 
 import { Drawer, Item } from "../../App/types";
 
@@ -46,7 +46,7 @@ export const ItemDrawer = ({ drawer }: { drawer: Drawer }) => {
     (item) => item.id === expandedItemPortalId
   )!; // Should always find item
 
-  const { root, heading, editBtn, content, portal } = styles;
+  const { root, heading, editBtn, content, portal } = useStyles();
   return (
     <div className={root} ref={drag}>
       <div className={heading}>
