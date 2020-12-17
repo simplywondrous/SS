@@ -36,7 +36,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Sidebar = ({ expanded, toggleExpand }) => {
+interface SidebarProps {
+  expanded: boolean;
+  toggleExpand: () => void;
+}
+
+const Sidebar = ({ expanded, toggleExpand }: SidebarProps) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>

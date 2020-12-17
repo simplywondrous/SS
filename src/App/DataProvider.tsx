@@ -1,4 +1,16 @@
 import React from "react";
+import { Drawer, Item } from "./types";
+
+export interface DataProvider {
+  items: Item[];
+  drawers: Drawer[];
+}
+
+export const DataProvider = ({
+  children,
+}: {
+  children: (data: DataProvider) => React.ReactNode;
+}) => <div>{children(data)}</div>;
 
 const date = new Date();
 
@@ -22,7 +34,7 @@ const data = {
       id: "an-id-2",
       user: "User",
       name: "Name 2",
-      image: null,
+      image: undefined,
       brand: "Brand",
       year: "Year",
       expiration: date,
@@ -35,7 +47,7 @@ const data = {
       id: "an-id-3",
       user: "User",
       name: "Name 3",
-      image: null,
+      image: undefined,
       brand: "Brand",
       year: "Year",
       expiration: date,
@@ -48,7 +60,7 @@ const data = {
       id: "an-id-4",
       user: "User",
       name: "Name 4",
-      image: null,
+      image: undefined,
       brand: "Brand",
       year: "Year",
       expiration: date,
@@ -61,7 +73,7 @@ const data = {
       id: "an-id-5",
       user: "User",
       name: "Name 5",
-      image: null,
+      image: undefined,
       brand: "Brand",
       year: "Year",
       expiration: date,
@@ -74,7 +86,7 @@ const data = {
       id: "an-id-6",
       user: "User",
       name: "Name 6",
-      image: null,
+      image: undefined,
       brand: "Brand",
       year: "Year",
       expiration: date,
@@ -94,7 +106,7 @@ const data = {
           id: "an-id",
           user: "User",
           name: "Name",
-          image: null,
+          image: undefined,
           brand: "Brand",
           year: "Year",
           expiration: date,
@@ -107,7 +119,7 @@ const data = {
           id: "an-id-2",
           user: "User",
           name: "Name 2",
-          image: null,
+          image: undefined,
           brand: "Brand",
           year: "Year",
           expiration: date,
@@ -120,7 +132,7 @@ const data = {
           id: "an-id-4",
           user: "User",
           name: "Name 4",
-          image: null,
+          image: undefined,
           brand: "Brand",
           year: "Year",
           expiration: date,
@@ -133,7 +145,7 @@ const data = {
           id: "an-id-5",
           user: "User",
           name: "Name 5",
-          image: null,
+          image: undefined,
           brand: "Brand",
           year: "Year",
           expiration: date,
@@ -146,7 +158,7 @@ const data = {
           id: "an-id-6",
           user: "User",
           name: "Name 6",
-          image: null,
+          image: undefined,
           brand: "Brand",
           year: "Year",
           expiration: date,
@@ -166,12 +178,12 @@ const data = {
           id: "an-id-3",
           user: "User",
           name: "Name 3",
-          image: null,
+          image: undefined,
           brand: "Brand",
           year: "Year",
           expiration: date,
           openedOn: date,
-          finishedOn: null,
+          finishedOn: date,
           drawer: "Drawer 2",
           notes: "Notes",
         },
@@ -179,12 +191,6 @@ const data = {
     },
   ],
 };
-
-const DataProvider = ({ children }) => {
-  return <div>{children(data)}</div>;
-};
-
-export default DataProvider;
 
 /**
  * GQL:

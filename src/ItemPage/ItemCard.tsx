@@ -3,7 +3,9 @@ import React from "react";
 import { Card, CardActionArea, CardMedia } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
+// @ts-ignore TODO get this linting error figured out w/ custom.d.ts
 import pic from "../pic.png";
+import { Item } from "../App/types";
 
 const itemStyles = makeStyles({
   root: {
@@ -41,7 +43,12 @@ const itemStyles = makeStyles({
   },
 });
 
-export const Item = ({ item, handleClick }) => {
+interface ItemCardProps {
+  item: Item;
+  handleClick: (id: Item["id"]) => void;
+}
+
+export const ItemCard = ({ item, handleClick }: ItemCardProps) => {
   const classes = itemStyles();
   return (
     <Card className={classes.root}>

@@ -1,6 +1,6 @@
 import React, {
-  // useReducer, 
-  useState
+  // useReducer,
+  useState,
 } from "react";
 import { makeStyles } from "@material-ui/styles";
 import {
@@ -14,7 +14,9 @@ import {
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
 
+// @ts-ignore TODO get this linting error figured out w/ custom.d.ts
 import pic from "../pic.png";
+import { Item } from "../App/types";
 
 const useStyles = makeStyles({
   root: {
@@ -84,7 +86,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const ItemPortal = ({ item }) => {
+export const ItemPortal = ({ item }: { item: Item }) => {
   // const initialState = {
   //   name: item.name ? item.name : "",
   //   image: item.image ? item.image : "",
@@ -146,70 +148,70 @@ export const ItemPortal = ({ item }) => {
             </IconButton>
           </>
         ) : (
-            <>
-              <div className={classes.formColumnBlock}>
-                <TextField
-                  // variant="outlined"
-                  label="Brand"
-                  id="my-input"
-                  className={classes.editing}
+          <>
+            <div className={classes.formColumnBlock}>
+              <TextField
+                // variant="outlined"
+                label="Brand"
+                id="my-input"
+                className={classes.editing}
                 // style={{ marginTop: "0px" }}
-                />
-                <TextField
-                  className={classes.editing}
-                  // variant="outlined"
-                  label="Name"
-                  id="my-input"
-                />
-                <TextField
-                  id="standard-select-currency"
-                  select
-                  label="Drawer"
-                  className={classes.editing}
-                  value={item.drawer}
-                >
-                  <MenuItem value="value"> Option One</MenuItem>
-                </TextField>
-              </div>
-              <div className={classes.formColumnBlock}>
-                <TextField
-                  className={classes.editing}
-                  // variant="outlined"
-                  label="Notes"
-                  multiline
-                  rows="8"
-                  id="my-input"
-                />
-              </div>
-              <div className={classes.formColumnBlock}>
-                <TextField
-                  id="date"
-                  label="Expiration Date"
-                  type="date"
-                  className={classes.picker}
-                  InputLabelProps={{ shrink: true }}
-                />
-                <TextField
-                  id="date"
-                  label="Opened On"
-                  type="date"
-                  className={classes.picker}
-                  InputLabelProps={{ shrink: true }}
-                />
-                <TextField
-                  id="date"
-                  label="Finished On"
-                  type="date"
-                  className={classes.picker}
-                  InputLabelProps={{ shrink: true }}
-                />
-              </div>
-              <div className={classes.buttonBlock}>
-                <Button className={classes.button}>Save</Button>
-                <Button className={classes.button}>Cancel</Button>
-              </div>
-            </>
-          )}
+              />
+              <TextField
+                className={classes.editing}
+                // variant="outlined"
+                label="Name"
+                id="my-input"
+              />
+              <TextField
+                id="standard-select-currency"
+                select
+                label="Drawer"
+                className={classes.editing}
+                value={item.drawer}
+              >
+                <MenuItem value="value"> Option One</MenuItem>
+              </TextField>
+            </div>
+            <div className={classes.formColumnBlock}>
+              <TextField
+                className={classes.editing}
+                // variant="outlined"
+                label="Notes"
+                multiline
+                rows="8"
+                id="my-input"
+              />
+            </div>
+            <div className={classes.formColumnBlock}>
+              <TextField
+                id="date"
+                label="Expiration Date"
+                type="date"
+                className={classes.picker}
+                InputLabelProps={{ shrink: true }}
+              />
+              <TextField
+                id="date"
+                label="Opened On"
+                type="date"
+                className={classes.picker}
+                InputLabelProps={{ shrink: true }}
+              />
+              <TextField
+                id="date"
+                label="Finished On"
+                type="date"
+                className={classes.picker}
+                InputLabelProps={{ shrink: true }}
+              />
+            </div>
+            <div className={classes.buttonBlock}>
+              <Button className={classes.button}>Save</Button>
+              <Button className={classes.button}>Cancel</Button>
+            </div>
+          </>
+        )}
       </div>
     </Card>
   );

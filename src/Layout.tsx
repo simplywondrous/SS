@@ -1,8 +1,14 @@
-import React, { useState, createContext, SetStateAction, Dispatch } from "react";
+import React, {
+  useState,
+  createContext,
+  SetStateAction,
+  Dispatch,
+} from "react";
 import { makeStyles } from "@material-ui/styles";
 
 import Sidebar from "./Sidebar";
 import { Body } from "./Body";
+import { DataProvider } from "./App/DataProvider";
 
 const useStyles = makeStyles({
   root: {
@@ -45,12 +51,15 @@ const useStyles = makeStyles({
 
 interface CursorContextValue {
   cursor: string;
-  setCursor: Dispatch<SetStateAction<string>>
+  setCursor: Dispatch<SetStateAction<string>>;
 }
 
-export const CursorContext = createContext<CursorContextValue>({ cursor: "pointer", setCursor: () => { } });
+export const CursorContext = createContext<CursorContextValue>({
+  cursor: "pointer",
+  setCursor: () => {},
+});
 
-export const Layout = ({ data }: any) => {
+export const Layout = ({ data }: { data: DataProvider }) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   const [cursor, setCursor] = useState<string>("pointer");
 
@@ -59,8 +68,9 @@ export const Layout = ({ data }: any) => {
     <CursorContext.Provider value={{ cursor, setCursor }}>
       <div className={classes.root}>
         <div
-          className={`${classes.sidebar} ${expanded ? classes.expanded : classes.closed
-            }`}
+          className={`${classes.sidebar} ${
+            expanded ? classes.expanded : classes.closed
+          }`}
         >
           <Sidebar
             expanded={expanded}
@@ -69,9 +79,7 @@ export const Layout = ({ data }: any) => {
         </div>
         <div className={classes.header}>Header</div>
         <div className={classes.main}>
-          <Body
-            data={data}
-          />
+          <Body data={data} />
         </div>
         <div className={classes.footer}>Footer</div>
       </div>

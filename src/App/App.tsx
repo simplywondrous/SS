@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 
-import DataProvider from "./DataProvider";
+import { DataProvider } from "./DataProvider";
 import { Layout } from "../Layout";
 
 function App() {

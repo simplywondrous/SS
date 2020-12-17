@@ -8,8 +8,10 @@ import DragHandleIcon from "@material-ui/icons/DragHandle";
 import { Typography } from "@material-ui/core";
 
 import { ItemPortal } from "./ItemPortal";
-import { Item } from "./Item";
+import { ItemCard } from "./ItemCard";
 import { CursorContext } from "../Layout";
+
+import { Drawer } from "../App/types";
 
 const drawerStyles = makeStyles(() => ({
   root: {
@@ -36,29 +38,26 @@ const drawerStyles = makeStyles(() => ({
   },
 }));
 
-export const Drawer = ({ drawer }) => {
+export const ItemDrawer = ({ drawer }: { drawer: Drawer }) => {
   const [expanded, setExpanded] = useState(false);
-  const [itemPortalId, setItemPortalId] = useState(null);
+  const [itemPortalId, setItemPortalId] = useState<Drawer["id"] | undefined>(
+    undefined
+  );
 
-  const handleItemClick = (id) => {
-    id === itemPortalId ? setItemPortalId(null) : setItemPortalId(id);
+  const handleItemClick = (id: Drawer["id"]) => {
+    id === itemPortalId ? setItemPortalId(undefined) : setItemPortalId(id);
   };
 
   const classes = drawerStyles();
   return (
-    <div
-      className={classes.root}
-    >
+    <div className={classes.root}>
       <div className={classes.heading}>
         <IconButton onClick={() => setExpanded(!expanded)}>
           {expanded ? <CloseIcon /> : <OpenIcon />}
         </IconButton>
         <Typography>{drawer.name}</Typography>
         <button className={classes.editBtn}>Edit Contents</button>
-        <IconButton
-          disableRipple
-          id={drawer.id}
-        >
+        <IconButton disableRipple id={drawer.id}>
           <DragHandleIcon />
         </IconButton>
       </div>
@@ -67,17 +66,21 @@ export const Drawer = ({ drawer }) => {
           <div className={classes.content}>
             {drawer.items.map((item) => {
               return (
-                <Item item={item} handleClick={handleItemClick} key={item.id} />
+                <ItemCard
+                  item={item}
+                  handleClick={handleItemClick}
+                  key={item.id}
+                />
               );
             })}
           </div>
           <div className={classes.portal}>
             {itemPortalId && (
               <ItemPortal
-                item={drawer.items.find((item) => item.id === itemPortalId)}
-              // shown={itemPortalId !== null}
-              // Right now shown is managed by the page -
-              // in the future maybe the portal manages it for animation?
+                item={drawer.items.find((item) => item.id === itemPortalId)!} // Should always find item
+                // shown={itemPortalId !== null}
+                // Right now shown is managed by the page -
+                // in the future maybe the portal manages it for animation?
               />
             )}
           </div>
