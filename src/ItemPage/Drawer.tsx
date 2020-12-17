@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 
 import { makeStyles } from "@material-ui/styles";
 import IconButton from "@material-ui/core/IconButton";
@@ -36,18 +36,9 @@ const drawerStyles = makeStyles(() => ({
   },
 }));
 
-export const Drawer = ({ drawer, onDragStart }) => {
+export const Drawer = ({ drawer }) => {
   const [expanded, setExpanded] = useState(false);
   const [itemPortalId, setItemPortalId] = useState(null);
-  const [isDragged, setIsDragged] = useState(false)
-  const { cursor, setCursor } = useContext(CursorContext)
-
-  const handleDragStart = (e) => {
-    console.log("Drag Start!", e.target);
-    e.dataTransfer.setData("application/x-moz-node", e.target);
-    e.dataTransfer.dropEffect = "move";
-    onDragStart(e.target)
-  };
 
   const handleItemClick = (id) => {
     id === itemPortalId ? setItemPortalId(null) : setItemPortalId(id);
@@ -57,8 +48,6 @@ export const Drawer = ({ drawer, onDragStart }) => {
   return (
     <div
       className={classes.root}
-      draggable={isDragged}
-      onDragStart={handleDragStart}
     >
       <div className={classes.heading}>
         <IconButton onClick={() => setExpanded(!expanded)}>
@@ -68,13 +57,7 @@ export const Drawer = ({ drawer, onDragStart }) => {
         <button className={classes.editBtn}>Edit Contents</button>
         <IconButton
           disableRipple
-          onMouseDown={() => {
-            setIsDragged(true);
-            setCursor("grabbing")
-          }}
-          onMouseOver={() => setCursor("grab")}
           id={drawer.id}
-          style={{ cursor }}
         >
           <DragHandleIcon />
         </IconButton>
