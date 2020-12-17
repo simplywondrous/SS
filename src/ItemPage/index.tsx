@@ -2,7 +2,7 @@ import React from "react";
 
 import { makeStyles } from "@material-ui/styles";
 
-import { Drawer } from "./Drawer";
+import { ItemDrawer } from "./ItemDrawer";
 import { DataProvider } from "../App/DataProvider";
 
 const useStyles = makeStyles(() => ({
@@ -43,7 +43,7 @@ export const ItemPage = ({ data }: { data: DataProvider }) => {
           .map((drawer) => {
             return (
               <>
-                <Drawer drawer={drawer} />
+                <ItemDrawer drawer={drawer} />
               </>
             );
           })}
