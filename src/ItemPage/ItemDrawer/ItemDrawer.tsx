@@ -1,12 +1,6 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
-import IconButton from "@material-ui/core/IconButton";
-import OpenIcon from "@material-ui/icons/ChevronRight";
-import CloseIcon from "@material-ui/icons/ExpandMore";
-import DragHandleIcon from "@material-ui/icons/DragHandle";
-import { Typography } from "@material-ui/core";
-
-import { useDrag } from "react-dnd";
+import { DropTargetMonitor, useDrag, useDrop, XYCoord } from "react-dnd";
 
 import { ItemPortal } from "../ItemPortal";
 import { ItemCard } from "../ItemCard";
@@ -15,25 +9,70 @@ import { CursorContext } from "../../Layout";
 import { useStyles } from "./styles";
 
 import { Drawer, Item } from "../../App/types";
+import { DragType } from "../types";
+import { ItemDrawerHeading } from "./ItemDrawerHeading";
 
-type DragType = "drawer";
-
-interface DragItem {
-  item: {
-    id: Drawer["id"];
-    type: DragType;
-  };
+interface ItemDrawerProps {
+  drawer: Drawer;
+  index: number;
+  onDrag: (dragIndex: number, hoverIndex: number) => void;
 }
 
-export const ItemDrawer = ({ drawer }: { drawer: Drawer }) => {
+interface DraggedDrawerData {
+  id: string;
+  index: number;
+  type: typeof DragType.DRAWER;
+}
+
+export const ItemDrawer = ({ drawer, index, onDrag }: ItemDrawerProps) => {
   const [expanded, setExpanded] = useState(false); // If drawer is open
   const [expandedItemPortalId, setExpandedItemPortalId] = useState<
     Item["id"] | undefined
   >(undefined);
+  const ref = useRef<HTMLDivElement>(null); // For calculating drag
+  const { items: drawerItems, name: drawerName, id: drawerId } = drawer;
+  const { root, content, portal } = useStyles();
 
-  const drawerDragType: DragType = "drawer";
-  const [collectedProps, drag] = useDrag({
-    item: { drawerId: drawer.id, type: drawerDragType },
+  const drawerDragType = DragType.DRAWER;
+
+  const [, drop] = useDrop({
+    accept: DragType.DRAWER,
+    hover: (dragged: DraggedDrawerData, monitor: DropTargetMonitor) => {
+      if (!ref.current) return;
+      const dragIndex = dragged.index;
+      const hoverIndex = index;
+
+      if (dragIndex === hoverIndex) return;
+
+      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      const hoverMidY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2; // vertical middle of this rect
+      const mousePos = monitor.getClientOffset();
+      if (!mousePos) throw Error;
+      const hoverMouseY = (mousePos as XYCoord).y - hoverBoundingRect.top;
+
+      // Only perform the move when the mouse has crossed half of the items height
+      // When dragging downwards, only move when the cursor is below 50%
+      // When dragging upwards, only move when the cursor is above 50%
+      if (dragIndex < hoverIndex && hoverMouseY < hoverMidY) return; // Dragging downwards
+      if (dragIndex > hoverIndex && hoverMouseY > hoverMidY) return; // Dragging upwards
+
+      onDrag(dragIndex, hoverIndex);
+
+      // Note: we're mutating the monitor item here!
+      // Generally it's better to avoid mutations,
+      // but it's good here for the sake of performance
+      // to avoid expensive index searches.
+      dragged.index = hoverIndex;
+    },
+  });
+
+  const [{ isDragging }, drag] = useDrag<DraggedDrawerData, any, any>({
+    item: { id: drawerId, index, type: drawerDragType },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+    // canDrag: (monitor) => true, // only if button is clicked
+    // begin: (monitor) => {}, // change cursor
   });
 
   const handleItemClick = (id: Item["id"]) => {
@@ -42,36 +81,32 @@ export const ItemDrawer = ({ drawer }: { drawer: Drawer }) => {
       : setExpandedItemPortalId(id);
   };
 
-  const expandedItemPortal = drawer.items.find(
+  const expandedItem = drawerItems.find(
     (item) => item.id === expandedItemPortalId
-  )!; // Should always find item
+  );
 
-  const { root, heading, editBtn, content, portal } = useStyles();
+  const items = drawerItems.map((item) => (
+    <ItemCard item={item} handleClick={handleItemClick} key={item.id} />
+  ));
+
+  drag(drop(ref));
   return (
-    <div className={root} ref={drag}>
-      <div className={heading}>
-        <IconButton onClick={() => setExpanded(!expanded)}>
-          {expanded ? <CloseIcon /> : <OpenIcon />}
-        </IconButton>
-        <Typography>{drawer.name}</Typography>
-        <button className={editBtn}>Edit Contents</button>
-        <IconButton disableRipple id={drawer.id}>
-          <DragHandleIcon />
-        </IconButton>
-      </div>
+    <div
+      className={root}
+      ref={ref}
+      style={{ opacity: isDragging ? 0 : 1, border: "1px dashed gray" }}
+    >
+      <ItemDrawerHeading
+        drawerName={drawerName}
+        drawerId={drawerId}
+        expanded={expanded}
+        onClick={() => setExpanded(!expanded)}
+      />
       {expanded && (
         <>
-          <div className={content}>
-            {drawer.items.map((item) => (
-              <ItemCard
-                item={item}
-                handleClick={handleItemClick}
-                key={item.id}
-              />
-            ))}
-          </div>
+          <div className={content}>{items}</div>
           <div className={portal}>
-            {expandedItemPortalId && <ItemPortal item={expandedItemPortal} />}
+            {expandedItem && <ItemPortal item={expandedItem} />}
           </div>
         </>
       )}

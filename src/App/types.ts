@@ -14,7 +14,7 @@ export interface Item {
 
 export interface Drawer {
   id: string; // TODO: Same as above
-  position: number;
+  // position: number;
   name: string;
   items: Item[];
 }

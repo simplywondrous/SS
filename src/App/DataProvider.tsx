@@ -99,7 +99,7 @@ const data = {
   drawers: [
     {
       id: "drawer-one",
-      position: 1,
+      // position: 0,
       name: "Drawer 1",
       items: [
         {
@@ -171,7 +171,7 @@ const data = {
     },
     {
       id: "drawer-two",
-      position: 2,
+      // position: 1,
       name: "Drawer 2",
       items: [
         {
@@ -185,6 +185,26 @@ const data = {
           openedOn: date,
           finishedOn: date,
           drawer: "Drawer 2",
+          notes: "Notes",
+        },
+      ],
+    },
+    {
+      id: "drawer-three",
+      // position: 1,
+      name: "Drawer 3",
+      items: [
+        {
+          id: "an-id-4",
+          user: "User",
+          name: "Name 4",
+          image: undefined,
+          brand: "Brand",
+          year: "Year",
+          expiration: date,
+          openedOn: date,
+          finishedOn: date,
+          drawer: "Drawer 3",
           notes: "Notes",
         },
       ],
