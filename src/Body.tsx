@@ -10,7 +10,7 @@ export const Body = ({ data }: { data: DataProvider }) => {
   // Router would exist here
   return (
     <DndProvider backend={HTML5Backend}>
-      <ItemPage data={data} />
+      <ItemPage drawers={data.drawers} />
     </DndProvider>
   );
 };
