@@ -2,28 +2,7 @@ Drag and Drop
 
 Okay so
 
-We have ItemPage, which renders Drawers and we go down that hole
+- Mouse change
+- Only drag on click + hold (mouse change)
 
-Drawer renders a draggable icon
-  When click-and-hold, drawer becomes draggable
-  All of drawer is switched with other Drawers
-  Can identify drawer by ID
-
-
-TODO:
-
-- Set drag image as the whole drawer 
-  - Hide current drawer image / collapse space
-
-- OnDragUp isn't needed, so can move cursor logic down a level, from Body?
-
-ISSUES:
-  - So didn't manage to have cursor working as thought
-    -"grab" will bring cursor back to middle of icon (which is fine)
-    -"grabbing" does not show, instead it's pointer with square
-
-  - Have not figured out how to drag the whole drawer element 
-    while only enabling drag if the drag icon is clicked, 
-    instead of clicking and dragging anywhere in the drawer
-    - Current manual solution of making HTML element to Canvas
-      - Alternative: html2canvas, domtoimage libraries
+- Collapse drawer when dragging

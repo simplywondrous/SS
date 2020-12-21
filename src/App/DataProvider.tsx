@@ -66,7 +66,7 @@ const data = {
       expiration: date,
       openedOn: date,
       finishedOn: date,
-      drawer: "Drawer",
+      drawer: "Drawer 3",
       notes: "Notes",
     },
     {

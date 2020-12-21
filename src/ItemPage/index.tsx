@@ -26,7 +26,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const ItemPage = ({ data }: { data: Drawer[] }) => {
+export const ItemPage = ({ drawers: data }: { drawers: Drawer[] }) => {
   const [drawers, setDrawers] = useState(data);
 
   const handleDrawerDrag = useCallback(
@@ -39,8 +39,6 @@ export const ItemPage = ({ data }: { data: Drawer[] }) => {
     },
     [drawers]
   );
-
-  console.log(drawers);
 
   const { root, header, addBtn, display } = useStyles();
   return (

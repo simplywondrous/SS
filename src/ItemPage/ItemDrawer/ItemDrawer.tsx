@@ -29,7 +29,8 @@ export const ItemDrawer = ({ drawer, index, onDrag }: ItemDrawerProps) => {
   const [expandedItemPortalId, setExpandedItemPortalId] = useState<
     Item["id"] | undefined
   >(undefined);
-  const ref = useRef<HTMLDivElement>(null); // For calculating drag
+  const dragRef = useRef<HTMLButtonElement>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
   const { items: drawerItems, name: drawerName, id: drawerId } = drawer;
   const { root, content, portal } = useStyles();
 
@@ -38,13 +39,13 @@ export const ItemDrawer = ({ drawer, index, onDrag }: ItemDrawerProps) => {
   const [, drop] = useDrop({
     accept: DragType.DRAWER,
     hover: (dragged: DraggedDrawerData, monitor: DropTargetMonitor) => {
-      if (!ref.current) return;
+      if (!drawerRef.current) return;
       const dragIndex = dragged.index;
       const hoverIndex = index;
 
       if (dragIndex === hoverIndex) return;
 
-      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      const hoverBoundingRect = drawerRef.current?.getBoundingClientRect();
       const hoverMidY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2; // vertical middle of this rect
       const mousePos = monitor.getClientOffset();
       if (!mousePos) throw Error;
@@ -66,13 +67,12 @@ export const ItemDrawer = ({ drawer, index, onDrag }: ItemDrawerProps) => {
     },
   });
 
-  const [{ isDragging }, drag] = useDrag<DraggedDrawerData, any, any>({
+  const [{ isDragging }, drag, preview] = useDrag<DraggedDrawerData, any, any>({
     item: { id: drawerId, index, type: drawerDragType },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
-    // canDrag: (monitor) => true, // only if button is clicked
-    // begin: (monitor) => {}, // change cursor
+    begin: () => setExpanded(false),
   });
 
   const handleItemClick = (id: Item["id"]) => {
@@ -89,18 +89,21 @@ export const ItemDrawer = ({ drawer, index, onDrag }: ItemDrawerProps) => {
     <ItemCard item={item} handleClick={handleItemClick} key={item.id} />
   ));
 
-  drag(drop(ref));
+  drag(dragRef);
+  drop(drawerRef);
+  preview(drawerRef);
   return (
     <div
       className={root}
-      ref={ref}
-      style={{ opacity: isDragging ? 0 : 1, border: "1px dashed gray" }}
+      ref={drawerRef}
+      style={{ opacity: isDragging ? 0.4 : 1, border: "1px dashed gray" }}
     >
       <ItemDrawerHeading
         drawerName={drawerName}
         drawerId={drawerId}
         expanded={expanded}
         onClick={() => setExpanded(!expanded)}
+        dragRef={dragRef}
       />
       {expanded && (
         <>

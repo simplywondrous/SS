@@ -23,4 +23,11 @@ export const useStyles = makeStyles({
   portal: {
     height: "auto",
   },
+  dragBtn: {
+    borderRadius: "0%",
+    "&:hover": {
+      backgroundColor: "white", // TODO - based on theme bg
+      cursor: "grab",
+    },
+  },
 });
