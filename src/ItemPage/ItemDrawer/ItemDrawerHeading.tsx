@@ -39,7 +39,7 @@ export const ItemDrawerHeading = ({
         id={`${drawerId}-drag-btn`}
         ref={dragRef}
       >
-        <DragHandleIcon />
+        <DragHandleIcon style={{ cursor: "grab" }} />
       </IconButton>
     </div>
   );

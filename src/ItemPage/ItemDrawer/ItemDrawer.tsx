@@ -4,7 +4,6 @@ import { DropTargetMonitor, useDrag, useDrop, XYCoord } from "react-dnd";
 
 import { ItemPortal } from "../ItemPortal";
 import { ItemCard } from "../ItemCard";
-import { CursorContext } from "../../Layout";
 
 import { useStyles } from "./styles";
 
@@ -67,8 +66,13 @@ export const ItemDrawer = ({ drawer, index, onDrag }: ItemDrawerProps) => {
     },
   });
 
-  const [{ isDragging }, drag, preview] = useDrag<DraggedDrawerData, any, any>({
+  const [{ isDragging }, drag, preview] = useDrag<
+    DraggedDrawerData,
+    unknown,
+    { isDragging: boolean }
+  >({
     item: { id: drawerId, index, type: drawerDragType },
+    options: { dropEffect: "grabbing" },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
@@ -91,12 +95,15 @@ export const ItemDrawer = ({ drawer, index, onDrag }: ItemDrawerProps) => {
 
   drag(dragRef);
   drop(drawerRef);
-  preview(drawerRef);
+  preview(null);
   return (
     <div
       className={root}
       ref={drawerRef}
-      style={{ opacity: isDragging ? 0.4 : 1, border: "1px dashed gray" }}
+      style={{
+        opacity: isDragging ? 0.3 : 1,
+        border: "1px dashed gray",
+      }}
     >
       <ItemDrawerHeading
         drawerName={drawerName}

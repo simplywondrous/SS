@@ -24,10 +24,10 @@ export const useStyles = makeStyles({
     height: "auto",
   },
   dragBtn: {
+    cursor: "default",
     borderRadius: "0%",
     "&:hover": {
       backgroundColor: "white", // TODO - based on theme bg
-      cursor: "grab",
     },
   },
 });
