@@ -11,7 +11,6 @@ import { ItemDrawerHeading } from "./ItemDrawerHeading";
 interface ItemDrawerProps {
   drawer: Drawer;
   index: number;
-  onDrag: (dragIndex: number, hoverIndex: number) => void;
 }
 
 export const ItemDrawer = ({ drawer, index }: ItemDrawerProps) => {
