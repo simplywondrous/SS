@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/styles";
 
 import { ItemDrawer } from "./ItemDrawer/ItemDrawer";
 import { Drawer } from "../App/types";
+import { handleDragItemReorder } from "./drag-helpers";
 
 const useStyles = makeStyles({
   root: {
@@ -31,11 +32,8 @@ export const ItemPage = ({ drawers: data }: { drawers: Drawer[] }) => {
 
   const handleDrawerDrag = useCallback(
     (dragIndex: number, hoverIndex: number) => {
-      const newDrawerOrder = drawers;
-      const draggedDrawer = newDrawerOrder.splice(dragIndex, 1);
-      newDrawerOrder.splice(hoverIndex, 0, draggedDrawer[0]);
-
-      setDrawers([...newDrawerOrder]);
+      const newDrawers = handleDragItemReorder(drawers, dragIndex, hoverIndex);
+      setDrawers(newDrawers);
     },
     [drawers]
   );

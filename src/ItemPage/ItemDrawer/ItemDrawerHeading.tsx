@@ -12,7 +12,6 @@ import { useStyles } from "./styles";
 interface ItemDrawerHeadingProps {
   drawerName: string;
   drawerId: string;
-  dragRef: React.RefObject<HTMLButtonElement>;
   expanded: boolean;
   onClick: () => void;
 }
@@ -22,7 +21,6 @@ export const ItemDrawerHeading = ({
   drawerId,
   expanded,
   onClick,
-  dragRef,
 }: ItemDrawerHeadingProps) => {
   const { heading, editBtn, dragBtn } = useStyles();
   return (
@@ -37,7 +35,6 @@ export const ItemDrawerHeading = ({
         disableRipple
         disableFocusRipple
         id={`${drawerId}-drag-btn`}
-        ref={dragRef}
       >
         <DragHandleIcon style={{ cursor: "grab" }} />
       </IconButton>
